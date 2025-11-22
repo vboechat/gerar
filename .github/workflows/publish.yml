@@ -1,11 +1,9 @@
 name: Publish to NPM Registry
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "The git tag version to be published (e.g., v1.0.0)"
-        required: true
+  push:
+    tags:
+      - "v*"
 
 jobs:
   publish:
@@ -15,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.tag }}
+          ref: ${{ github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,9 +30,9 @@ jobs:
       - name: Build project
         run: pnpm build
 
-      - name: Bump version in package.json
+      - name: Bump version in package.json from tag
         run: |
-          TAG_VERSION=${{ github.event.inputs.tag }}
+          TAG_VERSION=${GITHUB_REF##*/}
           NEW_VERSION=${TAG_VERSION#v}
           jq --arg version "$NEW_VERSION" '.version = $version' package.json > package.tmp.json
           mv package.tmp.json package.json
