@@ -1,0 +1,45 @@
+name: Publish to NPM Registry
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "The git tag version to be published (e.g., v1.0.0)"
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.12.0"
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test project
+        run: pnpm test
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Bump version in package.json
+        run: |
+          TAG_VERSION=${{ github.event.inputs.tag }}
+          NEW_VERSION=${TAG_VERSION#v}
+          jq --arg version "$NEW_VERSION" '.version = $version' package.json > package.tmp.json
+          mv package.tmp.json package.json
+
+      - name: Publish to NPM
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
