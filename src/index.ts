@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { cpfCommand } from "./commands/cpf";
+import { cnpjCommand } from "./commands/cnpj";
 
 const program = new Command();
 
@@ -21,5 +22,15 @@ program
     (value: string) => Number(value)
   )
   .action(cpfCommand.action);
+
+program
+  .command(cnpjCommand.name)
+  .description(cnpjCommand.description)
+  .option(
+    "-a, --amount <amount>",
+    "Quantidade a ser gerado.",
+    (value: string) => Number(value)
+  )
+  .action(cnpjCommand.action);
 
 program.parse();
