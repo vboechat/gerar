@@ -10,10 +10,10 @@ export const calculateCnpjDigit = (cnpj: string): number => {
 
   const sum = cnpj
     .split("")
-    .map(Number)
-    .reduce((acc, num, idx) => acc + num * relevantWeights[idx], 0);
+    .reduce((acc, num, index) => acc + Number(num) * relevantWeights[index], 0);
 
   const remainder = sum % 11;
+
   return remainder < 2 ? 0 : 11 - remainder;
 };
 
