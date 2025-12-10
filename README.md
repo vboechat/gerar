@@ -38,8 +38,10 @@ CPF 1) Com Máscara: 123.456.789-00 - Sem Máscara: 12345678900
 | ------------------------------------------------- | ----------- |
 | CPF                                               | ✅ Completo |
 | CNPJ                                              | ✅ Completo |
+| Flag nos comandos para gerar com ou sem máscara   | ✅ Completo |
 | Cartão de crédito com base na bandeira            | ⏳ Pendente |
 | Endereço                                          | ⏳ Pendente |
+| Chassi e Placa                                    | ⏳ Pendente |
 | UUID v4                                           | ⏳ Pendente |
 | UUID v7                                           | ⏳ Pendente |
 | Autocomplete no Terminal                          | ⏳ Pendente |

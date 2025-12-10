@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { cpfCommand } from "./commands/cpf";
-import { cnpjCommand } from "./commands/cnpj";
+import { registerCpfCommand } from "./commands/cpf";
+import { registerCnpjCommand } from "./commands/cnpj";
 
 const program = new Command();
 
@@ -13,24 +13,7 @@ program
 program.helpCommand("help", "Exibe informações de ajuda do CLI.");
 
 // TODO: Create automatic registration for commands.
-program
-  .command(cpfCommand.name)
-  .description(cpfCommand.description)
-  .option(
-    "-a, --amount <amount>",
-    "Quantidade a ser gerado.",
-    (value: string) => Number(value)
-  )
-  .action(cpfCommand.action);
-
-program
-  .command(cnpjCommand.name)
-  .description(cnpjCommand.description)
-  .option(
-    "-a, --amount <amount>",
-    "Quantidade a ser gerado.",
-    (value: string) => Number(value)
-  )
-  .action(cnpjCommand.action);
+registerCpfCommand(program);
+registerCnpjCommand(program);
 
 program.parse();
