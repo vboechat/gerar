@@ -18,6 +18,10 @@ export const commandBaseOptions = {
     flag: "-u, --unmasked",
     description: "Gera o resultado sem máscara.",
   },
+  copy: {
+    flag: "-c, --copy",
+    description: "Copia o resultado para a área de transferência.",
+  },
 } as const satisfies Record<string, CommandBaseOptionsObject>;
 
 export type CommandBaseOptions = keyof typeof commandBaseOptions;
