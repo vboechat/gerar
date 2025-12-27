@@ -17,6 +17,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
+    "clipboardy": "^5.0.2",
     "commander": "^14.0.2"
   },
   "devDependencies": {
@@ -25,5 +26,10 @@
     "typescript": "^5.9.3",
     "vitest": "^4.0.13"
   },
-  "packageManager": "pnpm@10.20.0"
+  "packageManager": "pnpm@10.20.0",
+  "pnpm": {
+    "overrides": {
+      "npm-run-path": "5.1.0"
+    }
+  }
 }

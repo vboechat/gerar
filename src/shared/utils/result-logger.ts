@@ -1,3 +1,4 @@
+import clipboard from "clipboardy";
 import { CommandOptions } from "./command-options";
 
 type ResultWithMask = {
@@ -29,15 +30,26 @@ export const logResult = ({
     return;
   }
 
-  const { masked, unmasked } = options;
+  if (options.copy) {
+    const maskToCopy = options.unmasked ? result.withoutMask : result.withMask;
+    const valueToCopy =
+      options.masked || options.unmasked
+        ? maskToCopy
+        : `${result.withMask} - ${result.withoutMask}`;
 
-  if (unmasked) {
+    clipboard.write(valueToCopy);
+    console.log(`Resultado copiado para a área de transferência.`);
+  }
+
+  if (options.unmasked) {
     console.log(`${label}${indexText} Sem Máscara: ${result.withoutMask}`);
+
     return;
   }
 
-  if (masked) {
+  if (options.masked) {
     console.log(`${label}${indexText} Com Máscara: ${result.withMask}`);
+
     return;
   }
 
